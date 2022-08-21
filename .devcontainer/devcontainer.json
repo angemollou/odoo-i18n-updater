@@ -1,0 +1,55 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/python-3-postgres
+// Update the VARIANT arg in docker-compose.yml to pick a Python version
+{
+	"name": "Odoo >=13.0 & PostgreSQL",
+	// This path is relative to the devcontainer.js
+	"dockerComposeFile": "./docker-compose.debug.yml",
+	"service": "web",
+	// Specify the path of workspace inside container
+	"workspaceFolder": "/mnt/extra-addons/odoo_testing",
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.linting.enabled": true,
+				"python.linting.pylintEnabled": true,
+				"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+				"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+				"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+				"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+				"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+				"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+				"python.testing.pytestPath": "/usr/local/py-utils/bin/pytest"
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance"
+			]
+		}
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or the host.
+	"forwardPorts": [
+		8069,
+		5432
+	],
+	// Load env variables (path is relative to the root of the project)
+	"runArgs": [
+		"--env-file",
+		".env"
+	],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// An array is passed to the OS for execution without going through a shell,
+	// whereas a string goes through a shell (it needs to be parsed into command and arguments).
+	"postCreateCommand": "odoo --db_host ${DB_HOST} --database odoo --db_user ${DB_USER} --db_password ${DB_PASSWORD}",
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "odoo"
+}

@@ -1,0 +1,77 @@
+version: '3.7'
+
+services:
+  web:
+    image: odoo:13.0
+    env_file:
+      - ../.env
+    # build:
+    #   context: .
+    #   dockerfile: ./Dockerfile
+    #   args:
+    #     LANG: C.UTF-8
+    #     ODOO_VERSION: 13.0
+    #     ODOO_RELEASE: 20220718
+    #     ODOO_SHA: c96fedf5e961122bc9face8dba102105070cbfb7
+    #     USER: "${DB_USER}" # default existing user: odoo
+    #     USER_UID: 1000
+    #     USER_GID: 1000
+    #     USER_SHELL: /bin/bash
+    #     ODOO_RC: /etc/odoo/odoo.conf
+
+    environment:
+      - HOST=${DB_HOST}
+      - USER=${DB_USER}
+      - PASSWORD=${DB_PASSWORD}
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - ..:/mnt/extra-addons/odoo_testing/
+
+    working_dir: /mnt/extra-addons/odoo_testing/
+
+    # Overrides default command so things don't shut down after the process ends.
+    entrypoint: ./.devcontainer/entrypoint.sh
+    command:
+      [
+        "odoo",
+        "--db_host",
+        "${DB_HOST}",
+        "--database",
+        "${DB_NAME}",
+        "--db_user",
+        "${DB_USER}",
+        "--db_password",
+        "${DB_PASSWORD}"
+      ]
+
+    # Uncomment the next line to use a non-root user for all processes.
+    user: "${DB_USER}"
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an web port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    ports:
+      - "8069:8069"
+
+    depends_on:
+      - db
+
+  db:
+    env_file:
+      - ../.env
+    image: postgres:13
+    restart: unless-stopped
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/pgdata
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-db-data:
+  odoo-web-data:
