@@ -20,6 +20,8 @@ services:
     #     ODOO_RC: /etc/odoo/odoo.conf
 
     environment:
+      # Turns off buffering for easier container logging
+      - PYTHONUNBUFFERED=1
       - HOST=${DB_HOST}
       - USER=${DB_USER}
       - PASSWORD=${DB_PASSWORD}
@@ -42,7 +44,9 @@ services:
         "--db_user",
         "${DB_USER}",
         "--db_password",
-        "${DB_PASSWORD}"
+        "${DB_PASSWORD}",
+        "--update",
+        "${MODULE_NAME}"
       ]
 
     # Uncomment the next line to use a non-root user for all processes.

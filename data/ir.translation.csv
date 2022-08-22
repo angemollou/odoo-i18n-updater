@@ -1,0 +1,7 @@
+module,type,name,res_id,src,value,comments,lang,state
+stock,code,addons/stock/models/stock_warehouse.py,850,Delivery Orders,Livraisons Odoo Testing,,fr_FR,translated
+stock,model,"stock.picking.type,name",stock.chi_picking_type_out,Delivery Orders,Livraisons Odoo Testing,,fr_FR,translated
+stock,model,"stock.picking.type,name",stock.picking_type_out,Delivery Orders,Livraisons Odoo Testing,,fr_FR,translated
+stock,code,addons/stock/models/stock_warehouse.py,839,Receipts,Réceptions Odoo Testing,,fr_FR,translated
+stock,model,"stock.picking.type,name",stock.chi_picking_type_in,Receipts,Réceptions Odoo Testing,,fr_FR,translated
+stock,model,"stock.picking.type,name",stock.picking_type_in,Receipts,Réceptions Odoo Testing,,fr_FR,translated
