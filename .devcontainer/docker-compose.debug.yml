@@ -26,7 +26,7 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./odoo.conf:/etc/odoo/odoo.conf
-      - ..:/mnt/extra-addons/odoo_testing/
+      - ..:/mnt/extra-addons/odoo_testing/:rw
 
     working_dir: /mnt/extra-addons/odoo_testing/
 
