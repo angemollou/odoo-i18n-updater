@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <!-- TODO: Restore prod. env., run `import_translation` only during installation -->
-  <!-- <data noupdate="1"> -->
-  <data>
+  <data noupdate="1">
     <function model="stock.picking.type" name="import_translation" />
   </data>
 </odoo>
